@@ -18,8 +18,8 @@
     "url": "https://github.com/datproto/n8n-nodes-flowise/issues"
   },
   "author": {
-    "name": "DataProto",
-    "email": "contact@dataproto.com"
+    "name": "DatProto",
+    "email": "contact@datproto.com"
   },
   "repository": {
     "type": "git",
@@ -41,10 +41,18 @@
     "lintfix": "eslint nodes credentials package.json --fix",
     "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json",
     "postinstall": "node verify-installation.js",
-    "test": "node test-flowise.js"
+    "test": "node test-flowise.js",
+    "setup-publish": "node setup-publish.js",
+    "publish:patch": "node publish.js patch",
+    "publish:minor": "node publish.js minor",
+    "publish:major": "node publish.js major",
+    "publish:prerelease": "node publish.js prerelease"
   },
   "files": [
-    "dist"
+    "dist",
+    "PUBLISHING.md",
+    "README.md",
+    "LICENSE.md"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,

@@ -1,5 +1,5 @@
 {
-	"node": "n8n-nodes-base.flowise",
+	"node": "dist/nodes/Flowise/Flowise.node.js",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["AI", "Communication"],

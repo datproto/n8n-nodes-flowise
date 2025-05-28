@@ -1,4 +1,10 @@
-import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
+import { 
+  IExecuteFunctions,
+  INodeExecutionData,
+  INodeType, 
+  INodeTypeDescription, 
+  NodeConnectionType 
+} from 'n8n-workflow';
 
 export class Flowise implements INodeType {
   description: INodeTypeDescription = {
@@ -317,4 +323,127 @@ export class Flowise implements INodeType {
       },
     ],
   };
+
+  async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+    const items = this.getInputData();
+    const results: INodeExecutionData[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+      const resource = this.getNodeParameter('resource', i) as string;
+      const operation = this.getNodeParameter('operation', i) as string;
+
+      try {
+        let responseData: any;
+
+        if (resource === 'chat' && operation === 'sendMessage') {
+          // The routing configuration in the description handles the API call
+          // n8n will automatically make the HTTP request based on the routing config
+          const question = this.getNodeParameter('question', i) as string;
+          const chatflowId = this.getNodeParameter('chatflowId', i) as string;
+
+          // Build request body
+          const body: any = {
+            question,
+          };
+
+          // Add optional parameters if provided
+          const sessionId = this.getNodeParameter('sessionId', i, '') as string;
+          if (sessionId) {
+            body.overrideConfig = body.overrideConfig || {};
+            body.overrideConfig.sessionId = sessionId;
+          }
+
+          const additionalOptions = this.getNodeParameter('additionalOptions', i, {}) as any;
+          
+          if (additionalOptions.returnSourceDocuments) {
+            body.overrideConfig = body.overrideConfig || {};
+            body.overrideConfig.returnSourceDocuments = additionalOptions.returnSourceDocuments;
+          }
+
+          if (additionalOptions.customVariables?.variable?.length) {
+            body.overrideConfig = body.overrideConfig || {};
+            body.overrideConfig.vars = {};
+            
+            for (const variable of additionalOptions.customVariables.variable) {
+              if (variable.name && variable.value) {
+                body.overrideConfig.vars[variable.name] = variable.value;
+              }
+            }
+          }
+
+          if (additionalOptions.chatHistory?.message?.length) {
+            body.history = additionalOptions.chatHistory.message;
+          }
+
+          // Get credentials
+          const credentials = await this.getCredentials('flowiseApi');
+          const baseUrl = credentials?.baseUrl || 'http://localhost:3000';
+
+          // Make the API request
+          const response = await this.helpers.httpRequest({
+            method: 'POST',
+            url: `${baseUrl}/api/v1/prediction/${chatflowId}`,
+            body,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            json: true,
+          });
+
+          responseData = response;
+
+        } else if (resource === 'vectorStore' && operation === 'upsertDocument') {
+          const chatflowId = this.getNodeParameter('chatflowId', i) as string;
+          const documentOptions = this.getNodeParameter('documentOptions', i, {}) as any;
+
+          // Build request body for vector store operation
+          const body: any = {};
+
+          if (documentOptions.returnSourceDocuments) {
+            body.returnSourceDocuments = documentOptions.returnSourceDocuments;
+          }
+
+          if (documentOptions.chatId) {
+            body.chatId = documentOptions.chatId;
+          }
+
+          // Get credentials
+          const credentials = await this.getCredentials('flowiseApi');
+          const baseUrl = credentials?.baseUrl || 'http://localhost:3000';
+
+          // Make the API request
+          const response = await this.helpers.httpRequest({
+            method: 'POST',
+            url: `${baseUrl}/api/v1/vector/upsert/${chatflowId}`,
+            body,
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            json: true,
+          });
+
+          responseData = response;
+        }
+
+        results.push({
+          json: responseData || {},
+          pairedItem: { item: i },
+        });
+
+      } catch (error) {
+        if (this.continueOnFail()) {
+          results.push({
+            json: { error: error.message },
+            pairedItem: { item: i },
+          });
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    return [results];
+  }
 }
