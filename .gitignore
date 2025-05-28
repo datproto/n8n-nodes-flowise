@@ -1,5 +1,8 @@
-# Environment configuration
-**/.env
-
-# VS Code Configuration
-**/.vscode/
+node_modules
+.DS_Store
+.tmp
+tmp
+dist
+npm-debug.log*
+yarn.lock
+.vscode/launch.json
