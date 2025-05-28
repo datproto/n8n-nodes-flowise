@@ -17,7 +17,7 @@ function exec(command) {
 
 function checkNpmLogin() {
   console.log('🔐 Checking npm authentication...');
-  
+
   const user = exec('npm whoami');
   if (user) {
     console.log(`✅ Logged in as: ${user}`);
@@ -30,10 +30,10 @@ function checkNpmLogin() {
 
 function checkGitConfig() {
   console.log('📝 Checking git configuration...');
-  
+
   const name = exec('git config user.name');
   const email = exec('git config user.email');
-  
+
   if (name && email) {
     console.log(`✅ Git configured as: ${name} <${email}>`);
     return true;
@@ -45,7 +45,7 @@ function checkGitConfig() {
 
 function checkGitRemote() {
   console.log('🌐 Checking git remote...');
-  
+
   const remote = exec('git remote get-url origin');
   if (remote) {
     console.log(`✅ Remote configured: ${remote}`);
@@ -59,18 +59,18 @@ function checkGitRemote() {
 function showSetupInstructions() {
   console.log('\n📋 Setup Instructions:');
   console.log('════════════════════════');
-  
+
   console.log('\n1. Configure npm authentication:');
   console.log('   npm login');
   console.log('   # Enter your npmjs credentials');
-  
+
   console.log('\n2. Configure git (if needed):');
   console.log('   git config --global user.name "Your Name"');
   console.log('   git config --global user.email "your.email@example.com"');
-  
+
   console.log('\n3. Configure git remote (if needed):');
   console.log('   git remote add origin https://github.com/datproto/n8n-nodes-flowise.git');
-  
+
   console.log('\n4. Usage examples:');
   console.log('   npm run publish:patch    # 0.1.1 → 0.1.2');
   console.log('   npm run publish:minor    # 0.1.1 → 0.2.0');

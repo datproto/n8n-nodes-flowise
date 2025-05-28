@@ -1,9 +1,9 @@
-import { 
+import {
   IExecuteFunctions,
   INodeExecutionData,
-  INodeType, 
-  INodeTypeDescription, 
-  NodeConnectionType 
+  INodeType,
+  INodeTypeDescription,
+  NodeConnectionType
 } from 'n8n-workflow';
 
 export class Flowise implements INodeType {
@@ -354,7 +354,7 @@ export class Flowise implements INodeType {
           }
 
           const additionalOptions = this.getNodeParameter('additionalOptions', i, {}) as any;
-          
+
           if (additionalOptions.returnSourceDocuments) {
             body.overrideConfig = body.overrideConfig || {};
             body.overrideConfig.returnSourceDocuments = additionalOptions.returnSourceDocuments;
@@ -363,7 +363,7 @@ export class Flowise implements INodeType {
           if (additionalOptions.customVariables?.variable?.length) {
             body.overrideConfig = body.overrideConfig || {};
             body.overrideConfig.vars = {};
-            
+
             for (const variable of additionalOptions.customVariables.variable) {
               if (variable.name && variable.value) {
                 body.overrideConfig.vars[variable.name] = variable.value;

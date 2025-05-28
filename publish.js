@@ -35,10 +35,10 @@ function log(message, color = 'reset') {
 
 function exec(command, options = {}) {
   try {
-    const result = execSync(command, { 
-      encoding: 'utf8', 
+    const result = execSync(command, {
+      encoding: 'utf8',
       stdio: options.silent ? 'pipe' : 'inherit',
-      ...options 
+      ...options
     });
     return result?.toString().trim();
   } catch (error) {
@@ -48,14 +48,14 @@ function exec(command, options = {}) {
 
 function checkGitStatus() {
   log('🔍 Checking git status...', 'blue');
-  
+
   // Check if we're in a git repository
   try {
     exec('git rev-parse --git-dir', { silent: true });
   } catch (error) {
     throw new Error('Not in a git repository');
   }
-  
+
   // Check for uncommitted changes
   const status = exec('git status --porcelain', { silent: true });
   if (status) {
@@ -63,20 +63,20 @@ function checkGitStatus() {
     console.log(status);
     throw new Error('Please commit all changes before publishing. Use --force to override (not recommended)');
   }
-  
+
   log('✅ Git status clean', 'green');
 }
 
 function validatePackage() {
   log('📦 Validating package.json...', 'blue');
-  
+
   const packagePath = path.join(__dirname, 'package.json');
   if (!fs.existsSync(packagePath)) {
     throw new Error('package.json not found');
   }
-  
+
   const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-  
+
   // Validate required fields
   const requiredFields = ['name', 'version', 'description', 'keywords'];
   for (const field of requiredFields) {
@@ -84,16 +84,16 @@ function validatePackage() {
       throw new Error(`Missing required field in package.json: ${field}`);
     }
   }
-  
+
   // Validate n8n configuration
   if (!pkg.n8n) {
     throw new Error('Missing n8n configuration in package.json');
   }
-  
+
   if (!pkg.n8n.credentials || !pkg.n8n.nodes) {
     throw new Error('Missing n8n credentials or nodes configuration');
   }
-  
+
   log('✅ Package.json validation passed', 'green');
   return pkg;
 }
@@ -106,56 +106,56 @@ function buildProject() {
 
 function runTests() {
   log('🧪 Running tests...', 'blue');
-  
+
   // Run the main test suite
   exec('node test-flowise.js');
-  
+
   // Run node loading test
   exec('node test-node-loading.js');
-  
+
   log('✅ All tests passed', 'green');
 }
 
 function updateVersion(versionType) {
   log(`📈 Updating version (${versionType})...`, 'blue');
-  
+
   const newVersion = exec(`npm version ${versionType} --no-git-tag-version`, { silent: true });
   const version = newVersion.replace('v', '');
-  
+
   log(`✅ Version updated to ${version}`, 'green');
   return version;
 }
 
 function createGitTag(version) {
   log(`🏷️  Creating git tag v${version}...`, 'blue');
-  
+
   // Stage package.json changes
   exec('git add package.json');
-  
+
   // Commit version bump
   exec(`git commit -m "chore: bump version to ${version}"`);
-  
+
   // Create tag
   exec(`git tag -a v${version} -m "Release v${version}"`);
-  
+
   log(`✅ Git tag v${version} created`, 'green');
 }
 
 function pushToGitHub() {
   log('📤 Pushing to GitHub...', 'blue');
-  
+
   // Push commits
   exec('git push origin main');
-  
+
   // Push tags
   exec('git push origin --tags');
-  
+
   log('✅ Pushed to GitHub', 'green');
 }
 
 function publishToNpm(version) {
   log('🚀 Publishing to npmjs...', 'blue');
-  
+
   // Check if logged in to npm
   try {
     const npmUser = exec('npm whoami', { silent: true });
@@ -163,10 +163,10 @@ function publishToNpm(version) {
   } catch (error) {
     throw new Error('Not logged in to npm. Run: npm login');
   }
-  
+
   // Publish package
   exec('npm publish --access public');
-  
+
   log(`✅ Published v${version} to npmjs`, 'green');
   log(`📦 Package URL: https://www.npmjs.com/package/n8n-nodes-flowise`, 'cyan');
 }
@@ -191,7 +191,7 @@ async function main() {
     // Parse command line arguments
     const args = process.argv.slice(2);
     let versionType = 'patch'; // default
-    
+
     if (args.length > 0) {
       const validTypes = ['patch', 'minor', 'major', 'prerelease'];
       if (validTypes.includes(args[0])) {
@@ -200,30 +200,30 @@ async function main() {
         throw new Error(`Invalid version type. Use: ${validTypes.join(', ')}`);
       }
     }
-    
+
     log('🚀 Starting automated npm publish process...', 'bright');
     log(`📈 Version type: ${versionType}`, 'cyan');
     log('════════════════════════════════════════════', 'bright');
-    
+
     // Pre-publish checks
     checkGitStatus();
     const pkg = validatePackage();
-    
+
     // Build and test
     buildProject();
     runTests();
-    
+
     // Version management
     const newVersion = updateVersion(versionType);
     createGitTag(newVersion);
-    
+
     // Publication
     pushToGitHub();
     publishToNpm(newVersion);
-    
+
     // Success
     showSuccessMessage(newVersion);
-    
+
   } catch (error) {
     log(`\n❌ Error: ${error.message}`, 'red');
     log('\n🔧 Troubleshooting:', 'yellow');
