@@ -1,46 +1,125 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-flowise
 
-# n8n-nodes-starter
+A community node for n8n that allows you to integrate with Flowise AI workflows and chatflows.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+## Features
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+- 🤖 **Chat Operations**: Send messages to Flowise chatflows
+- 📚 **Vector Store Operations**: Upsert documents to vector stores  
+- 🔐 **Authentication**: Support for API key authentication
+- 📝 **Session Management**: Maintain chat sessions across conversations
+- 🎯 **Custom Variables**: Pass custom variables to chatflows
+- 📎 **File Uploads**: Support for file uploads in chat operations
+- 🔄 **Chat History**: Maintain conversation history
+
+## Installation
+
+### Install from npm (when published)
+
+```bash
+npm install n8n-nodes-flowise
+```
+
+### Install from source
+
+1. Clone this repository
+2. Install dependencies: `pnpm install`
+3. Build the node: `pnpm build`
+4. Link to your n8n installation:
+   ```bash
+   cd /path/to/your/n8n
+   npm install /path/to/n8n-nodes-flowise
+   ```
 
 ## Prerequisites
 
-You need the following installed on your development machine:
+- n8n installed and running
+- Flowise instance running (locally or remote)
+- Node.js 20.15 or higher
 
-* [git](https://git-scm.com/downloads)
-* Node.js and pnpm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+## Configuration
 
-## Using this starter
+### Credentials
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+1. In n8n, go to **Settings** → **Credentials**
+2. Click **Add Credential** and search for "Flowise API"
+3. Configure the following:
+   - **Base URL**: Your Flowise instance URL (e.g., `http://localhost:3000`)
+   - **API Key**: Your Flowise API key (optional, required for secured instances)
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm lint` to check for errors or `npm lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+### Testing Credentials
 
-## More information
+The node includes a built-in credential test that calls the `/api/v1/version` endpoint to verify connectivity.
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+## Usage
+
+### Chat Operations
+
+#### Send Message
+
+Send a message to a Flowise chatflow and receive a response.
+
+**Parameters:**
+- **Chatflow ID**: The ID of your Flowise chatflow
+- **Message**: The message to send  
+- **Session ID** (optional): Unique session identifier for conversation continuity
+- **Override Config** (optional): JSON object to override chatflow configuration
+- **Custom Variables** (optional): JSON object with custom variables for the chatflow
+- **Chat History** (optional): Array of previous chat messages for context
+- **Uploads** (optional): Files to upload with the message
+
+**Example:**
+```json
+{
+  "chatflowId": "your-chatflow-id",
+  "message": "Hello, how can you help me?",
+  "sessionId": "user-123-session",
+  "overrideConfig": {
+    "temperature": 0.7
+  },
+  "vars": {
+    "userName": "John Doe",
+    "context": "customer_support"
+  }
+}
+```
+
+### Vector Store Operations
+
+#### Upsert Document
+
+Add or update documents in a Flowise vector store.
+
+**Parameters:**
+- **Chatflow ID**: The ID of your Flowise chatflow with vector store
+- **Document**: The document content to upsert
+- **Metadata** (optional): Additional metadata for the document
+
+## Development
+
+### Building
+
+```bash
+pnpm install
+pnpm build
+```
+
+### Testing
+
+Run the test suite to validate the node:
+
+```bash
+node test-flowise.js
+```
+
+### Code Quality
+
+```bash
+pnpm lint          # Check for linting issues
+pnpm lintfix       # Fix linting issues automatically
+pnpm format        # Format code with Prettier
+```
 
 ## License
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+MIT License - see [LICENSE.md](LICENSE.md) for details.
