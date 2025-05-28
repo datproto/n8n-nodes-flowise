@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-flowise",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "n8n node for Flowise AI workflows and chatflows integration",
   "keywords": [
     "n8n-community-node-package",
