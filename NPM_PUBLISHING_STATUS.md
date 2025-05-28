@@ -8,9 +8,10 @@ The n8n-nodes-flowise package is now **fully prepared** for npm publishing with 
 
 - **Name**: `n8n-nodes-flowise`
 - **Version**: `0.1.0`
-- **Size**: ~21.5 kB (compressed)
-- **Files**: 31 files in distribution
+- **Size**: ~16.2 kB (compressed)
+- **Files**: 14 files in distribution
 - **License**: MIT
+- **Focus**: Pure Flowise integration (cleaned of example nodes)
 
 ## 🚀 Publishing Methods
 
@@ -75,8 +76,9 @@ Before publishing, ensure:
 ✅ TypeScript compilation: SUCCESS
 ✅ ESLint validation: SUCCESS  
 ✅ Icon generation: SUCCESS
-✅ Distribution files: 31 files created
+✅ Distribution files: 14 files created (cleaned from 31)
 ✅ Package structure: Valid n8n node format
+✅ Size optimization: 25% smaller after cleanup
 ```
 
 ## 📊 Test Results
@@ -102,6 +104,8 @@ The npm package includes:
 - Type definitions (`.d.ts` files)
 - Source maps for debugging
 - README.md and LICENSE.md
+
+**Note**: Example and HttpBin nodes have been removed for a cleaner, focused package.
 
 ## 🔒 Security Features
 
@@ -151,6 +155,7 @@ Package is ready with:
 - ✅ Security best practices
 - ✅ Professional documentation
 - ✅ Automated CI/CD pipeline
+- ✅ Clean, focused codebase (removed example nodes)
 
 **Status**: 🟢 **READY FOR PUBLICATION**
 

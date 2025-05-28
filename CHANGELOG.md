@@ -15,10 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File upload support for documents
 - Comprehensive error handling
 - GitHub Actions CI/CD pipeline
+- Post-installation verification script
+- Comprehensive test suite
+- Security policy and issue templates
 
 ### Changed
 - Updated from npm to pnpm package manager
 - Enhanced package.json for npm publishing
+
+### Removed
+- Example nodes and credentials (ExampleNode, HttpBin)
+- Unnecessary build artifacts
+- Package size reduced by 25% (21.5kB → 16.2kB)
+- File count reduced by 55% (31 → 14 files)
 
 ### Fixed
 - TypeScript compilation issues
