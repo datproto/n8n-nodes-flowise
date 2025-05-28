@@ -13,8 +13,8 @@ console.log('==============================================');
 
 // Check if we're in node_modules or local development
 const isInNodeModules = __dirname.includes('node_modules');
-const packagePath = isInNodeModules 
-  ? path.join(__dirname, '../../') 
+const packagePath = isInNodeModules
+  ? path.join(__dirname, '../../')
   : __dirname;
 
 console.log(`📍 Package location: ${packagePath}`);
@@ -24,7 +24,7 @@ const packageJsonPath = path.join(packagePath, 'package.json');
 if (fs.existsSync(packageJsonPath)) {
   const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
   console.log(`✅ Package: ${pkg.name}@${pkg.version}`);
-  
+
   // Check n8n configuration
   if (pkg.n8n && pkg.n8n.nodes && pkg.n8n.credentials) {
     console.log(`✅ n8n configuration found`);
@@ -41,7 +41,7 @@ if (fs.existsSync(packageJsonPath)) {
 const distPath = path.join(packagePath, 'dist');
 if (fs.existsSync(distPath)) {
   console.log(`✅ dist directory found`);
-  
+
   // Check Flowise node
   const flowiseNodePath = path.join(distPath, 'nodes/Flowise/Flowise.node.js');
   if (fs.existsSync(flowiseNodePath)) {
@@ -49,7 +49,7 @@ if (fs.existsSync(distPath)) {
   } else {
     console.log(`❌ Flowise node missing`);
   }
-  
+
   // Check Flowise credentials
   const flowiseCredPath = path.join(distPath, 'credentials/FlowiseApi.credentials.js');
   if (fs.existsSync(flowiseCredPath)) {
@@ -57,7 +57,7 @@ if (fs.existsSync(distPath)) {
   } else {
     console.log(`❌ Flowise credentials missing`);
   }
-  
+
 } else {
   console.log(`❌ dist directory not found`);
 }
