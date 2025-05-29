@@ -6,7 +6,7 @@ import {
 } from 'n8n-workflow';
 
 export class FlowiseApi implements ICredentialType {
-  name = 'flowiseApi';
+  name = 'FlowiseApi';
   displayName = 'Flowise API';
   documentationUrl = 'https://docs.flowiseai.com/using-flowise/api';
   properties: INodeProperties[] = [
