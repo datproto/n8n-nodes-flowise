@@ -1,69 +1,69 @@
 {
-  "name": "n8n-nodes-flowise",
-  "version": "0.1.6",
-  "description": "n8n node for Flowise AI workflows and chatflows integration",
-  "keywords": [
-    "n8n-community-node-package",
-    "flowise",
-    "ai",
-    "chatflow",
-    "workflow",
-    "llm",
-    "n8n",
-    "automation"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/datproto/n8n-nodes-flowise",
-  "bugs": {
-    "url": "https://github.com/datproto/n8n-nodes-flowise/issues"
-  },
-  "author": {
-    "name": "DataProto",
-    "email": "contact@dataproto.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/datproto/n8n-nodes-flowise.git"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
-  },
-  "engines": {
-    "node": ">=20.15"
-  },
-  "main": "index.js",
-  "scripts": {
-    "build": "npx rimraf dist && tsc && gulp build:icons",
-    "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint",
-    "test": "node test-flowise.js"
-  },
-  "files": [
-    "dist"
-  ],
-  "n8n": {
-    "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/FlowiseApi.credentials.js"
-    ],
-    "nodes": [
-      "dist/nodes/Flowise/Flowise.node.js"
-    ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/parser": "~8.32.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-n8n-nodes-base": "^1.16.3",
-    "gulp": "^5.0.0",
-    "prettier": "^3.5.3",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.8.2"
-  },
-  "peerDependencies": {
-    "n8n-workflow": "*"
-  }
+	"name": "n8n-nodes-flowise",
+	"version": "0.1.6",
+	"description": "n8n node for Flowise AI workflows and chatflows integration",
+	"keywords": [
+		"n8n-community-node-package",
+		"flowise",
+		"ai",
+		"chatflow",
+		"workflow",
+		"llm",
+		"n8n",
+		"automation"
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/datproto/n8n-nodes-flowise",
+	"bugs": {
+		"url": "https://github.com/datproto/n8n-nodes-flowise/issues"
+	},
+	"author": {
+		"name": "DataProto",
+		"email": "contact@dataproto.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/datproto/n8n-nodes-flowise.git"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org"
+	},
+	"engines": {
+		"node": ">=20.15"
+	},
+	"main": "index.js",
+	"scripts": {
+		"build": "npx rimraf dist && tsc && gulp build:icons",
+		"dev": "tsc --watch",
+		"format": "prettier nodes credentials --write",
+		"lint": "eslint nodes credentials package.json",
+		"lintfix": "eslint nodes credentials package.json --fix",
+		"prepublishOnly": "npm run build && npm run lint",
+		"test": "node test-flowise.js"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/FlowiseApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Flowise/Flowise.node.js"
+		]
+	},
+	"devDependencies": {
+		"@typescript-eslint/parser": "~8.32.0",
+		"eslint": "^8.57.0",
+		"eslint-plugin-n8n-nodes-base": "^1.16.3",
+		"gulp": "^5.0.0",
+		"prettier": "^3.5.3",
+		"rimraf": "^6.0.1",
+		"typescript": "^5.8.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
 }
