@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2025-05-30
+
+### Changed
+- Updated node logo from placeholder SingleStore logo to custom Flowise-themed design
+- New logo features blue gradient background with AI workflow node representation
+- Logo now displays connected flow diagram representing AI processing workflow
+- Added 'AI' text indicator in center of logo for better identification
+
+## [0.1.5] - 2025-05-29
+
 ### Added
 - Initial Flowise node implementation
 - Support for Chat and Vector Store operations
