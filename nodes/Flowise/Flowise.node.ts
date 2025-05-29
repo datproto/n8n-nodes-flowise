@@ -3,7 +3,7 @@ import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflo
 export class Flowise implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Flowise',
-    name: 'Flowise',
+    name: 'flowise',
     icon: 'file:flowise.svg',
     group: ['transform'],
     version: 1,
@@ -16,7 +16,7 @@ export class Flowise implements INodeType {
     outputs: [NodeConnectionType.Main],
     credentials: [
       {
-        name: 'FlowiseApi',
+        name: 'flowiseApi',
         required: true,
       },
     ],
