@@ -7,10 +7,11 @@ The n8n-nodes-flowise package is now **fully prepared** for npm publishing with 
 ## 📦 Package Details
 
 - **Name**: `n8n-nodes-flowise`
-- **Version**: `0.1.0`
-- **Size**: ~21.5 kB (compressed)
-- **Files**: 31 files in distribution
+- **Version**: `0.1.6` ✅ **PUBLISHED**
+- **Size**: ~46.7 kB (compressed)
+- **Files**: Distribution with updated Flowise logo
 - **License**: MIT
+- **NPM**: https://www.npmjs.com/package/n8n-nodes-flowise
 
 ## 🚀 Publishing Methods
 
@@ -56,6 +57,23 @@ Before publishing, ensure:
 1. **NPM Account**: Set up at [npmjs.com](https://npmjs.com)
 2. **GitHub Secret**: Add `NPM_TOKEN` to repository secrets
 3. **Package Name**: Verify `n8n-nodes-flowise` is available
+
+## 📝 Release History
+
+### ✅ Published Versions
+
+- **v0.1.6** (2025-05-30) - Latest
+  - 🎨 Updated logo to custom Flowise AI workflow design
+  - 🔄 Replaced placeholder SingleStore logo with themed SVG
+  - 📊 New logo shows connected AI workflow nodes with blue gradient
+  - 📦 Published size: 46.7 kB
+
+- **v0.1.5** (2025-05-29)
+  - 🚀 Initial stable release with full functionality
+  - 💬 Chat and Vector Store operations support
+  - 🔐 Bearer token authentication
+  - 📁 File upload support for documents
+  - ⚙️ Session management and custom variables
 
 ## 📋 Pre-Publication Checklist
 
